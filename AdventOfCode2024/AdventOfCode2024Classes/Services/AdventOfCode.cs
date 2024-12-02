@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Classes.Services
 {
@@ -20,8 +21,23 @@ namespace Classes.Services
         /// <returns>The total difference.</returns>
         public static string CalculateTotalDifference(string[] data)
         {
-            int[] left = new int[data.Length];
-            int[] right = new int[data.Length];
+            var cols = ParseColumns(data);
+            Array.Sort(cols.Left);
+            Array.Sort(cols.Right);
+
+            var total = 0;
+            for (int i = 0; i < data.Length; i++)
+            {
+                total += Math.Abs(cols.Left[i] - cols.Right[i]);
+            }
+
+            return total.ToString();
+        }
+        
+        private static (int[] Left, int[] Right) ParseColumns(string[] data)
+        {
+            var left = new int[data.Length];
+            var right = new int[data.Length];
 
             for (int i = 0; i < data.Length; i++)
             {
@@ -30,16 +46,27 @@ namespace Classes.Services
                 right[i] = int.Parse(row[1]);
             }
 
-            Array.Sort(left);
-            Array.Sort(right);
+            return (left, right);
+        }
 
-            var total = 0;
+        /// <summary>
+        /// Calculates a similaruty score based on how many times a number in the left column appears in the right column.
+        /// </summary>
+        /// <param name="data">Two sets of numbers.</param>
+        /// <returns>Similarity score.</returns>
+        public static string FindSimilarityScore(string[] data)
+        {
+            var cols = ParseColumns(data);
+            Array.Sort(cols.Left);
+            Array.Sort(cols.Right);
+
+            var score = 0;
             for (int i = 0; i < data.Length; i++)
             {
-                total += Math.Abs(left[i] - right[i]);
+                score += cols.Left[i] * cols.Right.Where(r => r == cols.Left[i]).Count();
             }
 
-            return total.ToString();
+            return score.ToString();
         }
     }
 }

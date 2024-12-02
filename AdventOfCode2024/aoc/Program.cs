@@ -7,9 +7,13 @@ string result;
 
 switch (input)
 {
-    case "1":
+    case "1A":
         data = File.ReadAllLines(".\\Data\\1.txt");
         result = AdventOfCode.CalculateTotalDifference(data);
+        break;
+    case "1B":
+        data = File.ReadAllLines(".\\Data\\1.txt");
+        result = AdventOfCode.FindSimilarityScore(data);
         break;
     default:
         result = "Error";

@@ -27,5 +27,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("11", result);
         }
+
+        /// <summary>
+        /// Test for the CalculateTotalDifference method.
+        /// </summary>
+        [Fact]
+        public void FindSimilarityScore()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\1.txt");
+
+            //Act
+            var result = AdventOfCode.FindSimilarityScore(data);
+
+            //Assert
+            Assert.Equal("31", result);
+        }
     }
 }
