@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Classes.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +35,7 @@ namespace Classes.Services
 
             return total.ToString();
         }
-        
+
         private static (int[] Left, int[] Right) ParseColumns(string[] data)
         {
             var left = new int[data.Length];
@@ -67,6 +69,24 @@ namespace Classes.Services
             }
 
             return score.ToString();
+        }
+
+        /// <summary>
+        /// Counts the number of reports that are safe. Safe reports only ascend or descend
+        /// and only in increments of 1, 2, or 3.
+        /// </summary>
+        /// <param name="reports">Reports.</param>
+        /// <returns>The number of safe reports.</returns>
+        public static string CountSafeReports(string[] reports)
+        {
+            var safeCount = 0;
+            foreach (var levels in reports)
+            {
+                var report = new Report(levels);
+                if(report.IsSafe()) { safeCount++; }
+            }
+
+            return safeCount.ToString();
         }
     }
 }

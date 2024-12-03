@@ -15,6 +15,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\1.txt");
         result = AdventOfCode.FindSimilarityScore(data);
         break;
+    case "2A":
+        data = File.ReadAllLines(".\\Data\\2.txt");
+        result = AdventOfCode.CountSafeReports(data);
+        break;
     default:
         result = "Error";
         break;

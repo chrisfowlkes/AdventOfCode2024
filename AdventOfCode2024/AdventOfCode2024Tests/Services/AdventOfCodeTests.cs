@@ -43,5 +43,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("31", result);
         }
+
+        /// <summary>
+        /// Test for the CalculateTotalDifference method.
+        /// </summary>
+        [Fact]
+        public void CountSafeReports()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\2.txt");
+
+            //Act
+            var result = AdventOfCode.CountSafeReports(data);
+
+            //Assert
+            Assert.Equal("2", result);
+        }
     }
 }
