@@ -98,10 +98,10 @@ namespace Classes.Services
         /// </summary>
         /// <param name="contents"></param>
         /// <returns>The total of the mul commands.</returns>
-        public static string ScanMemory(string[] contents)
+        public static string ScanMemory(string[] contents, bool conditional)
         {
             var memory = new Memory(contents);
-            return memory.Scan();
+            return memory.Scan(conditional);
         }
     }
 }

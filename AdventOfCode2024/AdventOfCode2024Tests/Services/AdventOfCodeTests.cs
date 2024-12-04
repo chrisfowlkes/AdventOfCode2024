@@ -67,17 +67,21 @@ namespace Tests.Services
         /// <summary>
         /// Test for the ScanMemory method.
         /// </summary>
-        [Fact]
-        public void ScanMemory()
+        /// <param name="conditional">True to process conditional commands, false to skip.</param>
+        /// <param name="expected">Expected result.</param>
+        [Theory]
+        [InlineData(false, ".\\Data\\3A.txt", "161")]
+        [InlineData(true, ".\\Data\\3B.txt", "48")]
+        public void ScanMemory(bool conditional, string file, string expected)
         {
             //Arrange
-            var data = File.ReadAllLines(".\\Data\\3.txt");
+            var data = File.ReadAllLines(file);
 
             //Act
-            var result = AdventOfCode.ScanMemory(data);
+            var result = AdventOfCode.ScanMemory(data, conditional);
 
             //Assert
-            Assert.Equal("161", result);
+            Assert.Equal(expected, result);
         }
     }
 }

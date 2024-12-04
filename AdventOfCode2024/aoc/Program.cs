@@ -25,7 +25,11 @@ switch (input)
         break;
     case "3A":
         data = File.ReadAllLines(".\\Data\\3.txt");
-        result = AdventOfCode.ScanMemory(data);
+        result = AdventOfCode.ScanMemory(data, false);
+        break;
+    case "3B":
+        data = File.ReadAllLines(".\\Data\\3.txt");
+        result = AdventOfCode.ScanMemory(data, true);
         break;
     default:
         result = "Error";

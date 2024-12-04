@@ -18,7 +18,7 @@ namespace Classes.Models
         /// Constructor.
         /// </summary>
         /// <param name="levels">Levels for the report.</param>
-        public Report(string levels)
+        internal Report(string levels)
         {
             var temp = levels.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             this.levels = new int[temp.Length];
@@ -34,7 +34,7 @@ namespace Classes.Models
         /// </summary>
         /// <param name="problemDampener">If true and removing one level will make the report safe, it will be considered safe.</param>
         /// <returns>True if safe, false otherwise.</returns>
-        public bool IsSafe(bool problemDampener)
+        internal bool IsSafe(bool problemDampener)
         {
             return IsSafe(levels, problemDampener);
         }
