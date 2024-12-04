@@ -23,6 +23,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\2.txt");
         result = AdventOfCode.CountSafeReports(data, true);
         break;
+    case "3A":
+        data = File.ReadAllLines(".\\Data\\3.txt");
+        result = AdventOfCode.ScanMemory(data);
+        break;
     default:
         result = "Error";
         break;

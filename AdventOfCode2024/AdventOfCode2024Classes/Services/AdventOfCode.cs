@@ -92,5 +92,16 @@ namespace Classes.Services
 
             return safeCount.ToString();
         }
+
+        /// <summary>
+        /// Scans the corrupt memory contents for multiply commands and executes them.
+        /// </summary>
+        /// <param name="contents"></param>
+        /// <returns>The total of the mul commands.</returns>
+        public static string ScanMemory(string[] contents)
+        {
+            var memory = new Memory(contents);
+            return memory.Scan();
+        }
     }
 }

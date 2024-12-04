@@ -63,5 +63,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal(expected, result);
         }
+
+        /// <summary>
+        /// Test for the ScanMemory method.
+        /// </summary>
+        [Fact]
+        public void ScanMemory()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\3.txt");
+
+            //Act
+            var result = AdventOfCode.ScanMemory(data);
+
+            //Assert
+            Assert.Equal("161", result);
+        }
     }
 }
