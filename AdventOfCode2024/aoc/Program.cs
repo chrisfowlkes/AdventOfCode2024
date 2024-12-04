@@ -17,7 +17,11 @@ switch (input)
         break;
     case "2A":
         data = File.ReadAllLines(".\\Data\\2.txt");
-        result = AdventOfCode.CountSafeReports(data);
+        result = AdventOfCode.CountSafeReports(data, false);
+        break;
+    case "2B":
+        data = File.ReadAllLines(".\\Data\\2.txt");
+        result = AdventOfCode.CountSafeReports(data, true);
         break;
     default:
         result = "Error";

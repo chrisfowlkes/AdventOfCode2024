@@ -23,14 +23,14 @@ namespace Classes.Services
         /// <returns>The total difference.</returns>
         public static string CalculateTotalDifference(string[] data)
         {
-            var cols = ParseColumns(data);
-            Array.Sort(cols.Left);
-            Array.Sort(cols.Right);
+            var (Left, Right) = ParseColumns(data);
+            Array.Sort(Left);
+            Array.Sort(Right);
 
             var total = 0;
             for (int i = 0; i < data.Length; i++)
             {
-                total += Math.Abs(cols.Left[i] - cols.Right[i]);
+                total += Math.Abs(Left[i] - Right[i]);
             }
 
             return total.ToString();
@@ -58,14 +58,14 @@ namespace Classes.Services
         /// <returns>Similarity score.</returns>
         public static string FindSimilarityScore(string[] data)
         {
-            var cols = ParseColumns(data);
-            Array.Sort(cols.Left);
-            Array.Sort(cols.Right);
+            var (Left, Right) = ParseColumns(data);
+            Array.Sort(Left);
+            Array.Sort(Right);
 
             var score = 0;
             for (int i = 0; i < data.Length; i++)
             {
-                score += cols.Left[i] * cols.Right.Where(r => r == cols.Left[i]).Count();
+                score += Left[i] * Right.Where(r => r == Left[i]).Count();
             }
 
             return score.ToString();
@@ -76,14 +76,18 @@ namespace Classes.Services
         /// and only in increments of 1, 2, or 3.
         /// </summary>
         /// <param name="reports">Reports.</param>
+        /// <param name="problemDampener">If true and removing one level will make the report safe, it will be considered safe.</param>
         /// <returns>The number of safe reports.</returns>
-        public static string CountSafeReports(string[] reports)
+        public static string CountSafeReports(string[] reports, bool problemDampener)
         {
             var safeCount = 0;
             foreach (var levels in reports)
             {
                 var report = new Report(levels);
-                if(report.IsSafe()) { safeCount++; }
+                if(report.IsSafe(problemDampener)) 
+                { 
+                    safeCount++; 
+                }
             }
 
             return safeCount.ToString();
