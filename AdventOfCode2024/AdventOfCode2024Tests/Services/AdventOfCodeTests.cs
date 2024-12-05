@@ -99,5 +99,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("18", result);
         }
+
+        /// <summary>
+        /// Tests the WordSearchX method.
+        /// </summary>
+        [Fact]
+        public void WordSearchX()
+        {
+            //Arrange
+            var puzzle = File.ReadAllLines(".\\Data\\4.txt");
+
+            //Act
+            var result = AdventOfCode.WordSearchX(puzzle);
+
+            //Assert
+            Assert.Equal("9", result);
+        }
     }
 }

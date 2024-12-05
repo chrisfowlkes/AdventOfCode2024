@@ -114,5 +114,16 @@ namespace Classes.Services
             var wordSearch = new WordSearch(puzzle);
             return wordSearch.Search();
         }
+
+        /// <summary>
+        /// Searches the word search puzzle for two instances of the word MAS in an X pattern.
+        /// </summary>
+        /// <param name="puzzle">The word search puzzle.</param>
+        /// <returns>The number of times MAS occurs in an X pattern in the puzzle.</returns>
+        public static string WordSearchX(string[] puzzle)
+        {
+            var wordSearch = new WordSearch(puzzle);
+            return wordSearch.SearchX();
+        }
     }
 }

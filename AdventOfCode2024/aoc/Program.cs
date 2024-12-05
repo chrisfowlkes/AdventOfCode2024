@@ -35,6 +35,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\4.txt");
         result = AdventOfCode.WordSearch(data);
         break;
+    case "4B":
+        data = File.ReadAllLines(".\\Data\\4.txt");
+        result = AdventOfCode.WordSearchX(data);
+        break;
     default:
         result = "Error";
         break;

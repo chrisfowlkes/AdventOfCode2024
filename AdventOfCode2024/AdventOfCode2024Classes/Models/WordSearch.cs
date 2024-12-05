@@ -14,6 +14,7 @@ namespace Classes.Models
     {
         private readonly char[] word = ['X', 'M', 'A', 'S'];
         private readonly Point[] directions = [new Point(-1, -1), new Point(-1, 0), new Point(-1, 1), new Point(0, -1), new Point(0, 1), new Point(1, -1), new Point(1, 0), new Point(1, 1)];
+        private readonly Point[][] diagonals = [[new Point(-1, -1), new Point(1, 1)], [new Point(-1, 1), new Point(1, -1)]];
 
         /// <summary>
         /// Searches the puzzle for XMAS
@@ -46,10 +47,68 @@ namespace Classes.Models
                                 }
                             }
                             //Found the word in this direction.
-                            if(found)
+                            if (found)
                             {
                                 count++;
                             }
+                        }
+                    }
+                }
+            }
+
+            return count.ToString();
+        }
+
+        /// <summary>
+        /// Searches for the last 3 characters of XMAS in an X pattern.
+        /// </summary>
+        /// <returns>The number of occurances found.</returns>
+        internal string SearchX()
+        {
+            int count = 0;
+
+            for (int row = 0; row < puzzle.Length; row++)
+            {
+                for (int col = 0; col < puzzle[row].Length; col++)
+                {
+                    //Look for the middle letter of the word in every position of the puzzle.
+                    if (puzzle[row][col] == word[2])
+                    {
+                        //Found the first letter, now look for the rest of the word in diagonal directions.
+                        var foundX = true;
+                        foreach (Point[] diagonal in diagonals)
+                        {
+                            //Check each diagonal direction.
+                            var found1 = false;
+                            var found3 = false;
+                            foreach (Point point in diagonal)
+                            {
+                                //Check each point in the diagonal.
+                                int newRow = row + point.Y;
+                                int newCol = col + point.X;
+                                if (newRow < 0 || newRow >= puzzle.Length || newCol < 0 || newCol >= puzzle[row].Length)
+                                {
+                                    //Outside the bounds of the puzzle.
+                                    break;
+                                }
+                                if (puzzle[newRow][newCol] == word[1])
+                                {
+                                    found1 = true;
+                                }
+                                else if (puzzle[newRow][newCol] == word[3])
+                                {
+                                    found3 = true;
+                                }
+                            }
+                            if (!(found1 && found3))
+                            {
+                                foundX = false;
+                                break;
+                            }
+                        }
+                        if (foundX)
+                        {
+                            count++;
                         }
                     }
                 }
