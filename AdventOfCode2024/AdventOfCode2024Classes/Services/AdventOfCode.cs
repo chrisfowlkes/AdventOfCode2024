@@ -103,5 +103,16 @@ namespace Classes.Services
             var memory = new Memory(contents);
             return memory.Scan(conditional);
         }
+
+        /// <summary>
+        /// Searches the word search puzzle for the word XMAS.
+        /// </summary>
+        /// <param name="puzzle">The word search puzzle.</param>
+        /// <returns>The number of times XMAS occurs in the puzzle.</returns>
+        public static string WordSearch(string[] puzzle)
+        {
+            var wordSearch = new WordSearch(puzzle);
+            return wordSearch.Search();
+        }
     }
 }

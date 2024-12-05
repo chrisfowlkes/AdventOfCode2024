@@ -31,6 +31,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\3.txt");
         result = AdventOfCode.ScanMemory(data, true);
         break;
+    case "4A":
+        data = File.ReadAllLines(".\\Data\\4.txt");
+        result = AdventOfCode.WordSearch(data);
+        break;
     default:
         result = "Error";
         break;

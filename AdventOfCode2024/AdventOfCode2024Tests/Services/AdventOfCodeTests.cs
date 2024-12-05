@@ -83,5 +83,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal(expected, result);
         }
+
+        /// <summary>
+        /// Tests the WordSearch method.
+        /// </summary>
+        [Fact]
+        public void WordSearch()
+        {
+            //Arrange
+            var puzzle = File.ReadAllLines(".\\Data\\4.txt");
+
+            //Act
+            var result = AdventOfCode.WordSearch(puzzle);
+
+            //Assert
+            Assert.Equal("18", result);
+        }
     }
 }
