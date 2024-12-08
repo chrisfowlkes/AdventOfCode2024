@@ -125,5 +125,39 @@ namespace Classes.Services
             var wordSearch = new WordSearch(puzzle);
             return wordSearch.SearchX();
         }
+
+        /// <summary>
+        /// Returns the sum of the number of the middle page of all valid updates. 
+        /// </summary>
+        /// <param name="updates">Safety manual updates.</param>
+        /// <returns>Sum of the number of the middle page of all valid updates.</returns>
+        public static string CheckSafetyManualUpdate(string[] safetyManualUpdates)
+        {
+            var rules = new List<PageOrderingRule>();
+            PageOrderingRule[]? ruleArray = null;
+            var updates = new List<SafetyManualUpdate>();
+            bool rulesSection = true;
+
+            for (int i = 0; i < safetyManualUpdates.Length; i++)
+            {
+                if(rulesSection)
+                {
+                    if (safetyManualUpdates[i].IndexOf('|') > 0)
+                    {
+                        rules.Add(new PageOrderingRule(safetyManualUpdates[i]));
+                    }
+                    else
+                    {
+                        rulesSection = false;
+                        ruleArray = [.. rules];
+                    }
+                }
+                else
+                {
+                    updates.Add(new SafetyManualUpdate(ruleArray!, safetyManualUpdates[i]));
+                }
+            }
+            return updates.Where(u => u.IsValid()).Sum(u => u.MiddlePage()).ToString();
+        }
     }
 }

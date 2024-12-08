@@ -115,5 +115,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("9", result);
         }
+
+        /// <summary>
+        /// Tests the CheckSafetyManualUpdate method.
+        /// </summary>
+        [Fact]
+        public void CheckSafetyManualUpdate()
+        {
+            //Arrange
+            var input = File.ReadAllLines(".\\Data\\5.txt");
+
+            //Act
+            var result = AdventOfCode.CheckSafetyManualUpdate(input);
+
+            //Assert
+            Assert.Equal("143", result);
+        }
     }
 }
