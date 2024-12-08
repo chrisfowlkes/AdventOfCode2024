@@ -43,6 +43,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\5.txt");
         result = AdventOfCode.CheckSafetyManualUpdate(data);
         break;
+    case "5B":
+        data = File.ReadAllLines(".\\Data\\5.txt");
+        result = AdventOfCode.FixSafetyManualUpdate(data);
+        break;
     default:
         result = "Error";
         break;

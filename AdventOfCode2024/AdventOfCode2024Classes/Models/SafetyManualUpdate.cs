@@ -11,8 +11,9 @@ namespace Classes.Models
     /// </summary>
     internal class SafetyManualUpdate
     {
-        private readonly int[] pages;
+        private readonly List<int> pages = [];
         private readonly PageOrderingRule[] rules;
+        internal bool Valid { get; private set; }
 
         /// <summary>
         /// Constructor.
@@ -23,41 +24,62 @@ namespace Classes.Models
         {
             this.rules = rules;
             var split = pages.Split(',');
-            this.pages = new int[split.Length];
             for (int i = 0; i < split.Length; i++)
             {
-                this.pages[i] = int.Parse(split[i]);
+                this.pages.Add(int.Parse(split[i]));
             }
+            IsValid();
         }
 
         /// <summary>
-        /// Checks to see if the update is valid according to the pages and rules.
+        /// Sets the value of the Valid property by checking to see if the update is 
+        /// valid according to the pages and rules.
         /// </summary>
-        /// <returns>True if valid, false otherwise.</returns>
-        internal bool IsValid()
+        private void IsValid()
         {
-            bool valid = true;
-
+            Valid = true;
             foreach (var rule in rules)
             {
-                int second = Array.IndexOf(pages, rule.PageOrder[1]);
-                if (second >= 0 && second < Array.IndexOf(pages, rule.PageOrder[0]))
+                int second = pages.IndexOf(rule.PageOrder[1]);
+                if (second >= 0)
                 {
-                    valid = false;
-                    break;
+                    int first = pages.IndexOf(rule.PageOrder[0]);
+                    if (second < first)
+                    {
+                        Valid = false;
+                        break;
+                    }
                 }
             }
-
-            return valid;
         }
 
         /// <summary>
-        /// Determines the number of the middle page printed.
+        /// Determines the number of the middle page printed. If the rule is invalid, pages
+        /// will be reordered so the update is valid.
         /// </summary>
         /// <returns>The number of the middle page printed.</returns>
         public int MiddlePage()
         {
-            var middleIndex = (int)Math.Round(pages.Length / 2m, MidpointRounding.AwayFromZero) - 1;
+            while(! Valid)
+            {
+                foreach (var rule in rules)
+                {
+                    int second = pages.IndexOf(rule.PageOrder[1]);
+                    if (second >= 0)
+                    {
+                        int first = pages.IndexOf(rule.PageOrder[0]);
+                        if (second < first)
+                        {
+                            pages.RemoveAt(first);
+                            pages.Insert(second, rule.PageOrder[0]);
+                            Valid = false;
+                            break;
+                        }
+                    }
+                }
+                IsValid();
+            }
+            var middleIndex = (int)Math.Round(pages.Count / 2m, MidpointRounding.AwayFromZero) - 1;
             return pages[middleIndex];
         }
     }

@@ -126,12 +126,7 @@ namespace Classes.Services
             return wordSearch.SearchX();
         }
 
-        /// <summary>
-        /// Returns the sum of the number of the middle page of all valid updates. 
-        /// </summary>
-        /// <param name="updates">Safety manual updates.</param>
-        /// <returns>Sum of the number of the middle page of all valid updates.</returns>
-        public static string CheckSafetyManualUpdate(string[] safetyManualUpdates)
+        private static List<SafetyManualUpdate> LoadSafetyManualUpdates(string[] safetyManualUpdates)
         {
             var rules = new List<PageOrderingRule>();
             PageOrderingRule[]? ruleArray = null;
@@ -140,7 +135,7 @@ namespace Classes.Services
 
             for (int i = 0; i < safetyManualUpdates.Length; i++)
             {
-                if(rulesSection)
+                if (rulesSection)
                 {
                     if (safetyManualUpdates[i].IndexOf('|') > 0)
                     {
@@ -157,7 +152,28 @@ namespace Classes.Services
                     updates.Add(new SafetyManualUpdate(ruleArray!, safetyManualUpdates[i]));
                 }
             }
-            return updates.Where(u => u.IsValid()).Sum(u => u.MiddlePage()).ToString();
+
+            return updates;
+        }
+
+        /// <summary>
+        /// Returns the sum of the number of the middle page of all valid updates. 
+        /// </summary>
+        /// <param name="updates">Safety manual updates.</param>
+        /// <returns>Sum of the number of the middle page of all valid updates.</returns>
+        public static string CheckSafetyManualUpdate(string[] safetyManualUpdates)
+        {
+            return LoadSafetyManualUpdates(safetyManualUpdates).Where(u => u.Valid).Sum(u => u.MiddlePage()).ToString();
+        }
+
+        /// <summary>
+        /// Fixes and returns the sum of the number of the middle page of all invalid updates. 
+        /// </summary>
+        /// <param name="updates">Safety manual updates.</param>
+        /// <returns>Sum of the number of the middle page of all valid updates.</returns>
+        public static string FixSafetyManualUpdate(string[] safetyManualUpdates)
+        {
+            return LoadSafetyManualUpdates(safetyManualUpdates).Where(u => !u.Valid).Sum(u => u.MiddlePage()).ToString();
         }
     }
 }
