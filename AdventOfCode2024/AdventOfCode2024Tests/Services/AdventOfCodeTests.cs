@@ -147,5 +147,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("123", result);
         }
+
+        /// <summary>
+        /// Tests the CountLabLocationsChecked method.
+        /// </summary>
+        [Fact]
+        public void CountLabLocationsChecked()
+        {
+            //Arrange
+            var input = File.ReadAllLines(".\\Data\\6.txt");
+
+            //Act
+            var result = AdventOfCode.CountLabLocationsChecked(input);
+
+            //Assert
+            Assert.Equal("41", result);
+        }
     }
 }

@@ -175,5 +175,16 @@ namespace Classes.Services
         {
             return LoadSafetyManualUpdates(safetyManualUpdates).Where(u => !u.Valid).Sum(u => u.MiddlePage()).ToString();
         }
+
+        /// <summary>
+        /// Counts the number of locations checked by the guard. 
+        /// </summary>
+        /// <param name="updates">Map data.</param>
+        /// <returns>Number of locations checked.</returns>
+        public static string CountLabLocationsChecked(string[] mapData)
+        {
+            var map = new LabMap(mapData);
+            return map.CountSpacesChecked().ToString();
+        }
     }
 }

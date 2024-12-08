@@ -47,6 +47,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\5.txt");
         result = AdventOfCode.FixSafetyManualUpdate(data);
         break;
+    case "6A":
+        data = File.ReadAllLines(".\\Data\\6.txt");
+        result = AdventOfCode.CountLabLocationsChecked(data);
+        break;
     default:
         result = "Error";
         break;
