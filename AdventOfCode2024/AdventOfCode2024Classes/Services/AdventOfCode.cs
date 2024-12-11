@@ -186,5 +186,16 @@ namespace Classes.Services
             var map = new LabMap(mapData);
             return map.CountSpacesChecked().ToString();
         }
+
+        /// <summary>
+        /// Counts the number of locations that can cause a loop if blocked. 
+        /// </summary>
+        /// <param name="updates">Map data.</param>
+        /// <returns>Number of locations that can cause a loop.</returns>
+        public static string CountLoopLocations(string[] mapData)
+        {
+            var map = new LabMap(mapData);
+            return map.CountLoops().ToString();
+        }
     }
 }

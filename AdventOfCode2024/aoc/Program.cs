@@ -51,6 +51,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\6.txt");
         result = AdventOfCode.CountLabLocationsChecked(data);
         break;
+    case "6B":
+        data = File.ReadAllLines(".\\Data\\6.txt");
+        result = AdventOfCode.CountLoopLocations(data);
+        break;
     default:
         result = "Error";
         break;

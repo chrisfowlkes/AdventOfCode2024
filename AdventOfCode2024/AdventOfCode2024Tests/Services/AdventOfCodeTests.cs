@@ -163,5 +163,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("41", result);
         }
+
+        /// <summary>
+        /// Tests the CountLoopLocations method.
+        /// </summary>
+        [Fact]
+        public void CountLoopLocations()
+        {
+            //Arrange
+            var input = File.ReadAllLines(".\\Data\\6.txt");
+
+            //Act
+            var result = AdventOfCode.CountLoopLocations(input);
+
+            //Assert
+            Assert.Equal("6", result);
+        }
     }
 }
