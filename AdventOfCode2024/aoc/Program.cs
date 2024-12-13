@@ -63,6 +63,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\7.txt");
         result = AdventOfCode.CheckEquations(data, true);
         break;
+    case "8A":
+        data = File.ReadAllLines(".\\Data\\8.txt");
+        result = AdventOfCode.CountAntinodes(data);
+        break;
     default:
         result = "Error";
         break;

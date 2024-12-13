@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -213,6 +214,17 @@ namespace Classes.Services
             }
 
             return calibrationEquations.Where(e => e.IsValid(concat)).Sum(e => e.Answer).ToString();
+        }
+
+        /// <summary>
+        /// Counts the antinodes on the antenna map.
+        /// </summary>
+        /// <param name="mapData">The map data.</param>
+        /// <returns>The number of antinodes.</returns>
+        public static string CountAntinodes(string[] mapData)
+        {
+            var map = new AntennaMap(mapData);
+            return map.CountAntinodes().ToString();
         }
     }
 }

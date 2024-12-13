@@ -199,5 +199,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal(expected, result);
         }
+
+        /// <summary>
+        /// Tests the CountAntinodes method.
+        /// </summary>
+        [Fact]
+        public void CountAntinodes()
+        {
+            //Arrange
+            var input = File.ReadAllLines(".\\Data\\8.txt");
+
+            //Act
+            var result = AdventOfCode.CountAntinodes(input);
+
+            //Assert
+            Assert.Equal("14", result);
+        }
     }
 }
