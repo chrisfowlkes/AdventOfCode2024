@@ -57,7 +57,11 @@ switch (input)
         break;
     case "7A":
         data = File.ReadAllLines(".\\Data\\7.txt");
-        result = AdventOfCode.CheckEquations(data);
+        result = AdventOfCode.CheckEquations(data, false);
+        break;
+    case "7B":
+        data = File.ReadAllLines(".\\Data\\7.txt");
+        result = AdventOfCode.CheckEquations(data, true);
         break;
     default:
         result = "Error";

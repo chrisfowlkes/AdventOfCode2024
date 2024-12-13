@@ -199,11 +199,12 @@ namespace Classes.Services
         }
 
         /// <summary>
-        /// 
+        /// Checks the equations to see the value of the valid ones.
         /// </summary>
-        /// <param name="equations"></param>
-        /// <returns></returns>
-        public static string CheckEquations(string[] equations)
+        /// <param name="equations">The equations.</param>
+        /// <param name="concat">True to include the concat operator.</param>
+        /// <returns>The value of the valid equations.</returns>
+        public static string CheckEquations(string[] equations, bool concat)
         {
             var calibrationEquations = new List<CalibrationEquation>();
             foreach (var equation in equations)
@@ -211,7 +212,7 @@ namespace Classes.Services
                 calibrationEquations.Add(new CalibrationEquation(equation));
             }
 
-            return calibrationEquations.Where(e => e.IsValid()).Sum(e => e.Answer).ToString();
+            return calibrationEquations.Where(e => e.IsValid(concat)).Sum(e => e.Answer).ToString();
         }
     }
 }

@@ -37,23 +37,31 @@ namespace Classes.Models
             }
         }
 
-        private bool Multiply(long[] values)
+        private bool Multiply(long[] values, bool concat)
         {
             var newValues = new long[values.Length - 1];
             newValues[0] = values[0] * values[1];
 
-            return Check(values, newValues);
+            return Check(values, newValues, concat);
         }
 
-        private bool Add(long[] values)
+        private bool Add(long[] values, bool concat)
         {
             var newValues = new long[values.Length - 1];
             newValues[0] = values[0] + values[1];
 
-            return Check(values, newValues);
+            return Check(values, newValues, concat);
         }
 
-        private bool Check(long[] values, long[] newValues)
+        private bool Concat(long[] values)
+        {
+            var newValues = new long[values.Length - 1];
+            newValues[0] = long.Parse(values[0].ToString() + values[1].ToString());
+
+            return Check(values, newValues, true);
+        }
+
+        private bool Check(long[] values, long[] newValues, bool concat)
         {
             bool result;
             if (newValues[0] > Answer)
@@ -68,7 +76,14 @@ namespace Classes.Models
                 {
                     newValues[i] = values[i + 1];
                 }
-                result = Multiply(newValues) || Add(newValues);
+                if(concat)
+                {
+                    result = Multiply(newValues, concat) || Add(newValues, concat) || Concat(newValues);
+                }
+                else
+                {
+                    result = Multiply(newValues, concat) || Add(newValues, concat);
+                }
             }
             else
             {
@@ -82,11 +97,21 @@ namespace Classes.Models
         /// <summary>
         /// Checks to see if the equation is valid.
         /// </summary>
+        /// <param name="concat">Pass as true to include the concatenation operator.</param>
         /// <returns>True if the equation is valid, false otherwise.</returns>
-        internal bool IsValid()
+        internal bool IsValid(bool concat)
         {
             var values = equationValues.ToArray();
-            return Multiply(values) || Add(values);
+            bool result;
+            if(concat)
+            {
+                result = Multiply(values, concat) || Add(values, concat) || Concat(values);
+            }
+            else
+            {
+                result = Multiply(values, concat) || Add(values, concat);
+            }
+            return result;
         }
     }
 }

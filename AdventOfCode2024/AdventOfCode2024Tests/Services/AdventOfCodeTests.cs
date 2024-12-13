@@ -183,17 +183,21 @@ namespace Tests.Services
         /// <summary>
         /// Tests the CheckEquations method.
         /// </summary>
-        [Fact]
-        public void CheckEquations()
+        /// <param name="concat">True to test with the </param>
+        /// <param name="expected">Expected value.</param>
+        [Theory]
+        [InlineData(false, "3749")]
+        [InlineData(true, "11387")]
+        public void CheckEquations(bool concat, string expected)
         {
             //Arrange
             var input = File.ReadAllLines(".\\Data\\7.txt");
 
             //Act
-            var result = AdventOfCode.CheckEquations(input);
+            var result = AdventOfCode.CheckEquations(input, concat);
 
             //Assert
-            Assert.Equal("3749", result);
+            Assert.Equal(expected, result);
         }
     }
 }
