@@ -179,5 +179,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("6", result);
         }
+
+        /// <summary>
+        /// Tests the CheckEquations method.
+        /// </summary>
+        [Fact]
+        public void CheckEquations()
+        {
+            //Arrange
+            var input = File.ReadAllLines(".\\Data\\7.txt");
+
+            //Act
+            var result = AdventOfCode.CheckEquations(input);
+
+            //Assert
+            Assert.Equal("3749", result);
+        }
     }
 }

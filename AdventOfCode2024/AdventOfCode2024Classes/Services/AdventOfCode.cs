@@ -197,5 +197,21 @@ namespace Classes.Services
             var map = new LabMap(mapData);
             return map.CountLoops().ToString();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="equations"></param>
+        /// <returns></returns>
+        public static string CheckEquations(string[] equations)
+        {
+            var calibrationEquations = new List<CalibrationEquation>();
+            foreach (var equation in equations)
+            {
+                calibrationEquations.Add(new CalibrationEquation(equation));
+            }
+
+            return calibrationEquations.Where(e => e.IsValid()).Sum(e => e.Answer).ToString();
+        }
     }
 }
