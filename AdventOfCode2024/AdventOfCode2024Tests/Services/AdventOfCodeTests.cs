@@ -203,17 +203,21 @@ namespace Tests.Services
         /// <summary>
         /// Tests the CountAntinodes method.
         /// </summary>
-        [Fact]
-        public void CountAntinodes()
+        /// <param name="resonantHarmonics">Pass as true to consider resonant harmonics.</param>
+        /// <param name="expected">Expected result.</param>
+        [Theory]
+        [InlineData(false, "14")]
+        [InlineData(true, "34")]
+        public void CountAntinodes(bool resonantHarmonics, string expected)
         {
             //Arrange
             var input = File.ReadAllLines(".\\Data\\8.txt");
 
             //Act
-            var result = AdventOfCode.CountAntinodes(input);
+            var result = AdventOfCode.CountAntinodes(input, resonantHarmonics);
 
             //Assert
-            Assert.Equal("14", result);
+            Assert.Equal(expected, result);
         }
     }
 }

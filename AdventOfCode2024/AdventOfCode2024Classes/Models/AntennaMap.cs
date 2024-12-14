@@ -15,7 +15,7 @@ namespace Classes.Models
         /// <summary>
         /// Locations on the map.
         /// </summary>
-        internal List<AntennaMapLocation> Locations = new List<AntennaMapLocation>();
+        internal List<AntennaMapLocation> Locations = [];
 
         /// <summary>
         /// Constructor.
@@ -31,7 +31,26 @@ namespace Classes.Models
                     Locations.Add(location);
                 }
             }
+        }
 
+        private Point? CheckForAntinode(Point antinodeCoordinates)
+        {
+            var antinodeLocation = Locations.Where(l => l.Location == antinodeCoordinates).FirstOrDefault();
+            if (antinodeLocation != null)
+            {
+                antinodeLocation.Antinode++;
+            }
+
+            return antinodeLocation?.Location;
+        }
+
+        /// <summary>
+        /// Counts the number of antinodes on the map.
+        /// </summary>
+        /// <param name="resonantHarmonics">Pass as true to consider resonant harmonics.</param>
+        /// <returns>The number of antinodes on the map.</returns>
+        internal int CountAntinodes(bool resonantHarmonics)
+        {
             for (var i = 0; i < Locations.Count; i++)
             {
                 if (Locations[i].Antenna != '.')
@@ -40,30 +59,27 @@ namespace Classes.Models
                     {
                         if (Locations[i].Antenna == Locations[j].Antenna)
                         {
+                            if(resonantHarmonics)
+                            {
+                                Locations[i].Antinode++;
+                                Locations[j].Antinode++;
+                            }
                             var distance = new Size(Locations[j].Location.X - Locations[i].Location.X, Locations[j].Location.Y - Locations[i].Location.Y);
-                            CheckForAntinode(Point.Subtract(Locations[i].Location, distance));
-                            CheckForAntinode(Point.Add(Locations[j].Location, distance));
+                            var antinode = CheckForAntinode(Point.Subtract(Locations[i].Location, distance));
+                            while (resonantHarmonics && antinode != null)
+                            {
+                                antinode = CheckForAntinode(Point.Subtract(antinode.Value, distance));
+                            }
+                            antinode = CheckForAntinode(Point.Add(Locations[j].Location, distance));
+                            while (resonantHarmonics && antinode != null)
+                            {
+                                antinode = CheckForAntinode(Point.Add(antinode.Value, distance));
+                            }
                         }
                     }
                 }
             }
-        }
 
-        private void CheckForAntinode(Point antinodeCoordinates)
-        {
-            var antinodeLocation = Locations.Where(l => l.Location == antinodeCoordinates).FirstOrDefault();
-            if (antinodeLocation != null)
-            {
-                antinodeLocation.Antinode++;
-            }
-        }
-
-        /// <summary>
-        /// Counts the number of antinodes on the map.
-        /// </summary>
-        /// <returns>The number of antinodes on the map.</returns>
-        internal int CountAntinodes()
-        {
             return Locations.Where(l => l.Antinode > 0).Count();
         }
     }

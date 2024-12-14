@@ -220,11 +220,12 @@ namespace Classes.Services
         /// Counts the antinodes on the antenna map.
         /// </summary>
         /// <param name="mapData">The map data.</param>
+        /// <param name="resonantHarmonics">Pass as true to consider resonant harmonics.</param>
         /// <returns>The number of antinodes.</returns>
-        public static string CountAntinodes(string[] mapData)
+        public static string CountAntinodes(string[] mapData, bool resonantHarmonics)
         {
             var map = new AntennaMap(mapData);
-            return map.CountAntinodes().ToString();
+            return map.CountAntinodes(resonantHarmonics).ToString();
         }
     }
 }

@@ -65,7 +65,11 @@ switch (input)
         break;
     case "8A":
         data = File.ReadAllLines(".\\Data\\8.txt");
-        result = AdventOfCode.CountAntinodes(data);
+        result = AdventOfCode.CountAntinodes(data, false);
+        break;
+    case "8B":
+        data = File.ReadAllLines(".\\Data\\8.txt");
+        result = AdventOfCode.CountAntinodes(data, true);
         break;
     default:
         result = "Error";
