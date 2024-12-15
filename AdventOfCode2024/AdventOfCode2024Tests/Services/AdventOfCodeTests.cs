@@ -219,5 +219,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal(expected, result);
         }
+
+        /// <summary>
+        /// Tests the CompressDisk method.
+        /// </summary>
+        [Fact]
+        public void CompressDisk()
+        {
+            //Arrange
+            var input = File.ReadAllLines(".\\Data\\9.txt");
+
+            //Act
+            var result = AdventOfCode.CompressDisk(input[0]);
+
+            //Assert
+            Assert.Equal("1928", result);
+        }
     }
 }

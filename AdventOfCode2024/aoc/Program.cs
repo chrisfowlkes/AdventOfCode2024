@@ -71,6 +71,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\8.txt");
         result = AdventOfCode.CountAntinodes(data, true);
         break;
+    case "9A":
+        data = File.ReadAllLines(".\\Data\\9.txt");
+        result = AdventOfCode.CompressDisk(data[0]);
+        break;
     default:
         result = "Error";
         break;

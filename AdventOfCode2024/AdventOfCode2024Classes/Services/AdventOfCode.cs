@@ -227,5 +227,16 @@ namespace Classes.Services
             var map = new AntennaMap(mapData);
             return map.CountAntinodes(resonantHarmonics).ToString();
         }
+
+        /// <summary>
+        /// Rearranges the data given.
+        /// </summary>
+        /// <param name="diskData">Disk data.</param>
+        /// <returns>Checksum.</returns>
+        public static string CompressDisk(string diskData)
+        {
+            var disk = new Disk(diskData);
+            return disk.Compress().ToString();
+        }
     }
 }
