@@ -239,5 +239,16 @@ namespace Classes.Services
             var disk = new Disk(diskData);
             return disk.Compress(fragment).ToString();
         }
+
+        /// <summary>
+        /// Sums the scores of all trails on the map.
+        /// </summary>
+        /// <param name="mapData">Map data.</param>
+        /// <returns>Sum of the scores of all trailheads.</returns>
+        public static string SumTrailScores(string[] mapData)
+        {
+            var map = new TopographicMap(mapData);
+            return map.SumTrailScores().ToString();
+        }
     }
 }

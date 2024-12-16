@@ -79,6 +79,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\9.txt");
         result = AdventOfCode.CompressDisk(data[0], false);
         break;
+    case "10A":
+        data = File.ReadAllLines(".\\Data\\10.txt");
+        result = AdventOfCode.SumTrailScores(data);
+        break;
     default:
         result = "Error";
         break;

@@ -239,5 +239,25 @@ namespace Tests.Services
             //Assert
             Assert.Equal(expected, result);
         }
+
+        /// <summary>
+        /// Tests the SumTrailScores method.
+        /// </summary>
+        /// <param name="fragment">If true, allows fragmentation of files on disk.</param>
+        /// <param name="expected">Expected result.</param>
+        [Theory]
+        [InlineData(".\\Data\\10A.txt", "1")]
+        [InlineData(".\\Data\\10B.txt", "36")]
+        public void SumTrailScores(string file, string expected)
+        {
+            //Arrange
+            var input = File.ReadAllLines(file);
+
+            //Act
+            var result = AdventOfCode.SumTrailScores(input);
+
+            //Assert
+            Assert.Equal(expected, result);
+        }
     }
 }
