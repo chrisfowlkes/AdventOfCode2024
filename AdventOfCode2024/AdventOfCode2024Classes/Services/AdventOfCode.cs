@@ -250,5 +250,16 @@ namespace Classes.Services
             var map = new TopographicMap(mapData);
             return map.SumTrailScores().ToString();
         }
+
+        /// <summary>
+        /// Sums the ratings of all trails on the map.
+        /// </summary>
+        /// <param name="mapData">Map data.</param>
+        /// <returns>Sum of the ratings of all trailheads.</returns>
+        public static string SumTrailRatings(string[] mapData)
+        {
+            var map = new TopographicMap(mapData);
+            return map.SumTrailRatings().ToString();
+        }
     }
 }

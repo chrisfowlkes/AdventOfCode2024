@@ -48,21 +48,43 @@ namespace Classes.Models
 
             foreach (Point trailhead in trailheads)
             {
-                var currentLocations = new List<Point>() { trailhead };
-                for (int i = 0; i < 9; i++)
-                {
-                    var nextLocations = new List<Point>();
-                    foreach (var currentLocation in currentLocations)
-                    {
-                        nextLocations.AddRange(EvaluatePoint(currentLocation).Distinct());
-                    }
-                    currentLocations = nextLocations;
-                }
-
-                sum += currentLocations.Distinct().Count();
+                sum += CheckTrailhead(trailhead).Distinct().Count();
             }
 
             return sum;
+        }
+
+        /// <summary>
+        /// Sums the ratings of all the trailheads. A trailhead rating is equal to the number of 
+        /// paths to peaks that can be reached from the trailhead.
+        /// </summary>
+        /// <returns>The sum of the ratings of the trailheads.</returns>
+        internal int SumTrailRatings()
+        {
+            int sum = 0;
+
+            foreach (Point trailhead in trailheads)
+            {
+                sum += CheckTrailhead(trailhead).Count;
+            }
+
+            return sum;
+        }
+
+        private List<Point> CheckTrailhead(Point trailhead)
+        {
+            var currentLocations = new List<Point>() { trailhead };
+            for (int i = 0; i < 9; i++)
+            {
+                var nextLocations = new List<Point>();
+                foreach (var currentLocation in currentLocations)
+                {
+                    nextLocations.AddRange(EvaluatePoint(currentLocation));
+                }
+                currentLocations = nextLocations;
+            }
+
+            return currentLocations;
         }
 
         private List<Point> EvaluatePoint(Point point)

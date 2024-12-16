@@ -259,5 +259,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal(expected, result);
         }
+
+        /// <summary>
+        /// Tests the SumTrailRatings method.
+        /// </summary>
+        [Fact]
+        public void SumTrailRatings()
+        {
+            //Arrange
+            var input = File.ReadAllLines(".\\Data\\10B.txt");
+
+            //Act
+            var result = AdventOfCode.SumTrailRatings(input);
+
+            //Assert
+            Assert.Equal("81", result);
+        }
     }
 }
