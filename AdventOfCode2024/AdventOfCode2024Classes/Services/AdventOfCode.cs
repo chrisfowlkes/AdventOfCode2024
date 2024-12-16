@@ -232,11 +232,12 @@ namespace Classes.Services
         /// Rearranges the data given.
         /// </summary>
         /// <param name="diskData">Disk data.</param>
+        /// <param name="fragment">If true, allows fragmentation of files on disk.</param>
         /// <returns>Checksum.</returns>
-        public static string CompressDisk(string diskData)
+        public static string CompressDisk(string diskData, bool fragment)
         {
             var disk = new Disk(diskData);
-            return disk.Compress().ToString();
+            return disk.Compress(fragment).ToString();
         }
     }
 }

@@ -223,17 +223,21 @@ namespace Tests.Services
         /// <summary>
         /// Tests the CompressDisk method.
         /// </summary>
-        [Fact]
-        public void CompressDisk()
+        /// <param name="fragment">If true, allows fragmentation of files on disk.</param>
+        /// <param name="expected">Expected result.</param>
+        [Theory]
+        [InlineData(true, "1928")]
+        [InlineData(false, "2858")]
+        public void CompressDisk(bool fragment, string expected)
         {
             //Arrange
             var input = File.ReadAllLines(".\\Data\\9.txt");
 
             //Act
-            var result = AdventOfCode.CompressDisk(input[0]);
+            var result = AdventOfCode.CompressDisk(input[0], fragment);
 
             //Assert
-            Assert.Equal("1928", result);
+            Assert.Equal(expected, result);
         }
     }
 }

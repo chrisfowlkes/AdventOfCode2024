@@ -73,7 +73,11 @@ switch (input)
         break;
     case "9A":
         data = File.ReadAllLines(".\\Data\\9.txt");
-        result = AdventOfCode.CompressDisk(data[0]);
+        result = AdventOfCode.CompressDisk(data[0], true);
+        break;
+    case "9B":
+        data = File.ReadAllLines(".\\Data\\9.txt");
+        result = AdventOfCode.CompressDisk(data[0], false);
         break;
     default:
         result = "Error";

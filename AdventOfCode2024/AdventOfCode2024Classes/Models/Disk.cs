@@ -16,11 +16,19 @@ namespace Classes.Models
         /// <summary>
         /// Defragments the dis and returns thenew checksum.
         /// </summary>
+        /// <param name="fragment">If true, allows fragmentation of files on disk.</param>
         /// <returns>Checksum.</returns>
-        internal long Compress()
+        internal long Compress(bool fragment)
         {
             var data = BuildFileSystem();
-            Compress(data);
+            if(fragment)
+            {
+                CompressData(data);
+            }
+            else
+            {
+                CompressFiles(data);
+            }
             return CalculateChecksum(data);
         }
 
@@ -43,7 +51,7 @@ namespace Classes.Models
                 }
                 else
                 {
-                    //Odd. Use 0.
+                    //Odd. Use null for empty space.
                     for (int j = 0; j < size; j++)
                     {
                         data.Add(null);
@@ -54,7 +62,7 @@ namespace Classes.Models
             return data;
         }
 
-        private static void Compress(List<int?> data)
+        private static void CompressData(List<int?> data)
         {
             for (int i = data.Count - 1; i >= 0; i--)
             {
@@ -75,6 +83,97 @@ namespace Classes.Models
             }
         }
 
+        private static void CompressFiles(List<int?> data)
+        {
+            var diskPtr = data.Count - 1;
+
+
+            while (diskPtr >= 0)
+            {
+                FindNextFile(data, ref diskPtr);
+                if(diskPtr >= 0)
+                {
+                    var fileEnd = diskPtr;
+                    FindFileStart(data, ref diskPtr);
+                    var fileStart = diskPtr;
+                    var fileSize = fileEnd - fileStart + 1;
+                    var emptySpaceStart = FindEmptySpace(data, fileSize, fileStart - 1);
+                    if(emptySpaceStart < fileStart)
+                    {
+                        MoveFile(data, fileStart, fileSize, emptySpaceStart);
+                    }
+                    //diskPtr is at start of file. Move back one.
+                    diskPtr--;
+                }
+            }
+        }
+
+        private static void MoveFile(List<int?> data, int fileStart, int fileSize, int moveTo)
+        {
+            for (int i = 0; i < fileSize; i++)
+            {
+                data[moveTo + i] = data[fileStart + i];
+                data[fileStart + i] = null;
+            }
+        }
+
+        private static int FindEmptySpace(List<int?> data, int size, int max)
+        {
+            var diskPtr = 0;
+            while (diskPtr <= max)
+            {
+                FindEmptySpaceStart(data, ref diskPtr, max);
+                var start = diskPtr;
+                FindEnd(data, ref diskPtr);
+                var end = diskPtr;
+                if(end - start >= size)
+                {
+                    diskPtr = start;
+                    break;
+                }
+                else
+                {
+                    diskPtr++;
+                }
+            }
+
+            return diskPtr;
+        }
+
+        private static void FindEmptySpaceStart(List<int?> data, ref int diskPtr, int max)
+        {
+            while (diskPtr <= max && data[diskPtr] != null)
+            {
+                diskPtr++;
+            }
+        }
+
+        private static void FindEnd(List<int?> data, ref int diskPtr)
+        {
+            var fileId = data[diskPtr];
+            while (diskPtr < data.Count && data[diskPtr] == fileId)
+            {
+                diskPtr++;
+            }
+        }
+
+        private static void FindNextFile(List<int?> data, ref int diskPtr)
+        {
+            while (diskPtr >= 0 && data[diskPtr] == null)
+            {
+                diskPtr--;
+            }
+        }
+
+        private static void FindFileStart(List<int?> data, ref int diskPtr)
+        {
+            var fileId = data[diskPtr];
+            while (diskPtr > 0 && data[diskPtr-1] == fileId)
+            {
+                diskPtr--;
+            }
+        }
+
         private static long CalculateChecksum(List<int?> data)
         {
             var checksum = 0L;
@@ -82,7 +181,7 @@ namespace Classes.Models
             {
                 if(data[i] != null)
                 {
-                    checksum += i * data[i]!.Value;
+                    checksum += Math.BigMul(i, data[i]!.Value);
                 }
             }
             return checksum;
