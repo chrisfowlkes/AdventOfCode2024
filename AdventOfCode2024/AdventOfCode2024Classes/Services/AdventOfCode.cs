@@ -271,8 +271,7 @@ namespace Classes.Services
         public static string CountStones(string stones, int blinkCount)
         {
             var stoneSet = new StoneSet(stones);
-            stoneSet.Blink(blinkCount);
-            return stoneSet.Stones.Count.ToString();
+            return stoneSet.Blink(blinkCount).ToString();
         }
     }
 }

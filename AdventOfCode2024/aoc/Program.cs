@@ -91,6 +91,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\11.txt");
         result = AdventOfCode.CountStones(data[0], 25);
         break;
+    case "11B":
+        data = File.ReadAllLines(".\\Data\\11.txt");
+        result = AdventOfCode.CountStones(data[0], 75);
+        break;
     default:
         result = "Error";
         break;

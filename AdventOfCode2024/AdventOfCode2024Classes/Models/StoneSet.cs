@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,8 @@ namespace Classes.Models
     /// </summary>
     internal class StoneSet
     {
-        /// <summary>
-        /// Stones.
-        /// </summary>
-        internal List<long> Stones { get; private set; } = [];
+        private readonly List<long> stones = [];
+        private readonly Dictionary<long, long?[]> answers = [];
 
         /// <summary>
         /// Constructor.
@@ -25,7 +24,7 @@ namespace Classes.Models
             var stoneValues = stones.Split(' ');
             foreach(var stone in stoneValues)
             {
-                this.Stones.Add(int.Parse(stone));
+                this.stones.Add(int.Parse(stone));
             }
         }
 
@@ -33,36 +32,76 @@ namespace Classes.Models
         /// Performs a blink.
         /// </summary>
         /// <param name="blinkCount">The number of blinks to perform.</param>
-        internal void Blink(int blinkCount)
+        /// <returns>The number of stones after the blinks are done.</returns>
+        internal long Blink(int blinkCount)
         {
-            for (int i = 0; i < blinkCount; i++)
+            long result = 0;
+            foreach (var stone in stones)
             {
-                var newStones = new List<long>();
+                result += ProcessStone(stone, blinkCount);
+            }
+            return result;
+        }
 
-                foreach (var stone in Stones)
+        private long ProcessStone(long stone, int blinkCount)
+        {
+            long result;
+
+            long?[] stoneAnswers;
+            if (!answers.TryGetValue(stone, out stoneAnswers!))
+            {
+                stoneAnswers = new long?[75];
+                answers.Add(stone, stoneAnswers);
+            }
+
+            if (stoneAnswers[blinkCount - 1] != null)
+            {
+                result = stoneAnswers[blinkCount - 1]!.Value;
+            }
+            else
+            {
+                if (stone == 0)
                 {
-                    if (stone == 0)
+                    if (blinkCount > 1)
                     {
-                        newStones.Add(1);
+                        result = ProcessStone(1, blinkCount - 1);
                     }
                     else
                     {
-                        var stoneValue = stone.ToString();
-                        if (stoneValue.Length % 2 == 0)
+                        result = 1;
+                    }
+                }
+                else
+                {
+                    var stoneValue = stone.ToString();
+                    if (stoneValue.Length % 2 == 0)
+                    {
+                        if (blinkCount > 1)
                         {
                             var midpoint = stoneValue.Length / 2;
-                            newStones.Add(long.Parse(stoneValue[..midpoint]));
-                            newStones.Add(long.Parse(stoneValue[midpoint..]));
+                            result = ProcessStone(long.Parse(stoneValue[..midpoint]), blinkCount - 1) + ProcessStone(long.Parse(stoneValue[midpoint..]), blinkCount - 1);
                         }
                         else
                         {
-                            newStones.Add(stone * 2024);
+                            result = 2;
+                        }
+                    }
+                    else
+                    {
+                        if (blinkCount > 1)
+                        {
+                            result = ProcessStone(stone * 2024, blinkCount - 1);
+                        }
+                        else
+                        {
+                            result = 1;
                         }
                     }
                 }
-
-                Stones = newStones;
+                stoneAnswers[blinkCount - 1] = result;
             }
+
+            return result;
         }
     }
 }
