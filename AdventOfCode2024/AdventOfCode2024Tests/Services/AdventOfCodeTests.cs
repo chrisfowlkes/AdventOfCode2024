@@ -275,5 +275,31 @@ namespace Tests.Services
             //Assert
             Assert.Equal("81", result);
         }
+
+        /// <summary>
+        /// Tests the CountStones method.
+        /// </summary>
+        /// <param name="fragment">If true, allows fragmentation of files on disk.</param>
+        /// <param name="expected">Expected result.</param>
+        [Theory]
+        [InlineData(".\\Data\\11A.txt", 1, "7")]
+        [InlineData(".\\Data\\11B.txt", 1, "3")]
+        [InlineData(".\\Data\\11B.txt", 2, "4")]
+        [InlineData(".\\Data\\11B.txt", 3, "5")]
+        [InlineData(".\\Data\\11B.txt", 4, "9")]
+        [InlineData(".\\Data\\11B.txt", 5, "13")]
+        [InlineData(".\\Data\\11B.txt", 6, "22")]
+        [InlineData(".\\Data\\11B.txt", 25, "55312")]
+        public void CountStones(string file, int blinkCount, string expected)
+        {
+            //Arrange
+            var input = File.ReadAllLines(file);
+
+            //Act
+            var result = AdventOfCode.CountStones(input[0], blinkCount);
+
+            //Assert
+            Assert.Equal(expected, result);
+        }
     }
 }

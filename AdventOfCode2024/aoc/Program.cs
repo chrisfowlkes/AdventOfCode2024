@@ -87,6 +87,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\10.txt");
         result = AdventOfCode.SumTrailRatings(data);
         break;
+    case "11A":
+        data = File.ReadAllLines(".\\Data\\11.txt");
+        result = AdventOfCode.CountStones(data[0], 25);
+        break;
     default:
         result = "Error";
         break;

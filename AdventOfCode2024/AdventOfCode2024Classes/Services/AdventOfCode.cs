@@ -261,5 +261,18 @@ namespace Classes.Services
             var map = new TopographicMap(mapData);
             return map.SumTrailRatings().ToString();
         }
+
+        /// <summary>
+        /// Returns the number of stones after blinking.
+        /// </summary>
+        /// <param name="stones">Starting stones.</param>
+        /// <param name="blinkCount">Number of blinks.</param>
+        /// <returns>Number of stones after blinking.</returns>
+        public static string CountStones(string stones, int blinkCount)
+        {
+            var stoneSet = new StoneSet(stones);
+            stoneSet.Blink(blinkCount);
+            return stoneSet.Stones.Count.ToString();
+        }
     }
 }
