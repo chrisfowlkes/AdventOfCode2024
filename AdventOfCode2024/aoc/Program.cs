@@ -95,6 +95,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\11.txt");
         result = AdventOfCode.CountStones(data[0], 75);
         break;
+    case "12A":
+        data = File.ReadAllLines(".\\Data\\12.txt");
+        result = AdventOfCode.CalculateFencePrice(data);
+        break;
     default:
         result = "Error";
         break;

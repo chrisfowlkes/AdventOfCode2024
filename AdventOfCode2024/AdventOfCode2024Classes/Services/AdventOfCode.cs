@@ -273,5 +273,15 @@ namespace Classes.Services
             var stoneSet = new StoneSet(stones);
             return stoneSet.Blink(blinkCount).ToString();
         }
+
+        /// <summary>
+        /// Calculates fence price for the garden.
+        /// </summary>
+        /// <returns>The price for fencing around the garden.</returns>
+        public static string CalculateFencePrice(string[] mapData)
+        {
+            var garden = new Garden(mapData);
+            return garden.CalculateFencePrice().ToString();
+        }
     }
 }

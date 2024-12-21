@@ -279,7 +279,8 @@ namespace Tests.Services
         /// <summary>
         /// Tests the CountStones method.
         /// </summary>
-        /// <param name="fragment">If true, allows fragmentation of files on disk.</param>
+        /// <param name="file">The input file.</param>
+        /// <param name="blinkCount">The number of blinks for the test.</param>
         /// <param name="expected">Expected result.</param>
         [Theory]
         [InlineData(".\\Data\\11A.txt", 1, "7")]
@@ -297,6 +298,26 @@ namespace Tests.Services
 
             //Act
             var result = AdventOfCode.CountStones(input[0], blinkCount);
+
+            //Assert
+            Assert.Equal(expected, result);
+        }
+
+        /// <summary>
+        /// Tests the CalculateFencePrice method.
+        /// </summary>
+        /// <param name="file">The input file.</param>
+        /// <param name="expected">Expected result.</param>
+        [Theory]
+        [InlineData(".\\Data\\12A.txt", "140")]
+        [InlineData(".\\Data\\12B.txt", "1930")]
+        public void CalculateFencePrice(string file, string expected)
+        {
+            //Arrange
+            var input = File.ReadAllLines(file);
+
+            //Act
+            var result = AdventOfCode.CalculateFencePrice(input);
 
             //Assert
             Assert.Equal(expected, result);
