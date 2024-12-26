@@ -307,17 +307,18 @@ namespace Tests.Services
         /// Tests the CalculateFencePrice method.
         /// </summary>
         /// <param name="file">The input file.</param>
+        /// <param name="bulk">Pass true for a bulk discount.</param>
         /// <param name="expected">Expected result.</param>
         [Theory]
-        [InlineData(".\\Data\\12A.txt", "140")]
-        [InlineData(".\\Data\\12B.txt", "1930")]
-        public void CalculateFencePrice(string file, string expected)
+        [InlineData(".\\Data\\12A.txt", false, "140")]
+        [InlineData(".\\Data\\12B.txt", false, "1930")]
+        public void CalculateFencePrice(string file, bool bulk, string expected)
         {
             //Arrange
             var input = File.ReadAllLines(file);
 
             //Act
-            var result = AdventOfCode.CalculateFencePrice(input);
+            var result = AdventOfCode.CalculateFencePrice(input, bulk);
 
             //Assert
             Assert.Equal(expected, result);

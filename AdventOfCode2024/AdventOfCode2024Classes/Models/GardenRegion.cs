@@ -19,10 +19,11 @@ namespace Classes.Models
         /// <summary>
         /// Calculatews the price for fence around the region.
         /// </summary>
+        /// <param name="bulk">Pass true for a bulk discount.</param>
         /// <returns>The price of fence for the region.</returns>
-        internal int CalculateFencePrice()
+        internal int CalculateFencePrice(bool bulk)
         {
-            var perimeter = Plots.Sum(p => p.Perimeter);
+            var perimeter = Plots.Sum(p => p.Perimeter.Count);
             return perimeter * Plots.Count;
         }
     }

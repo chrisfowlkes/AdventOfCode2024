@@ -27,9 +27,8 @@ namespace Classes.Models
         /// </summary>
         internal GardenRegion? Region { get; set; }
         /// <summary>
-        /// The perimeter of the region around this plot. Starts as 4, decrement when bordering plots 
-        /// of the same types are found.
+        /// The perimeter of the region around this plot. One item each for North, SOuth, East, and West perimeter.
         /// </summary>
-        internal int Perimeter { get; set; } = 4;
+        internal List<char> Perimeter { get; set; } = ['N', 'S', 'E', 'W'];
     }
 }

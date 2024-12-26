@@ -97,7 +97,7 @@ switch (input)
         break;
     case "12A":
         data = File.ReadAllLines(".\\Data\\12.txt");
-        result = AdventOfCode.CalculateFencePrice(data);
+        result = AdventOfCode.CalculateFencePrice(data, false);
         break;
     default:
         result = "Error";

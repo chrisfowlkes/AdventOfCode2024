@@ -277,11 +277,12 @@ namespace Classes.Services
         /// <summary>
         /// Calculates fence price for the garden.
         /// </summary>
+        /// <param name="bulk">Pass true for a bulk discount.</param>
         /// <returns>The price for fencing around the garden.</returns>
-        public static string CalculateFencePrice(string[] mapData)
+        public static string CalculateFencePrice(string[] mapData, bool bulk)
         {
             var garden = new Garden(mapData);
-            return garden.CalculateFencePrice().ToString();
+            return garden.CalculateFencePrice(bulk).ToString();
         }
     }
 }

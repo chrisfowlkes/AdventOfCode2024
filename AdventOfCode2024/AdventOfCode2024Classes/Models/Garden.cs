@@ -31,8 +31,8 @@ namespace Classes.Models
                         var neighbor = plots.Last();
                         if (neighbor.PlantType == plot.PlantType)
                         {
-                            plot.Perimeter--;
-                            neighbor.Perimeter--;
+                            plot.Perimeter.Remove('W');
+                            neighbor.Perimeter.Remove('E');
                             neighbor.Region!.Plots.Add(plot);
                             plot.Region = neighbor.Region;
                         }
@@ -42,8 +42,8 @@ namespace Classes.Models
                         var neighbor = plots.Where(p => p.Location.X == plot.Location.X && p.Location.Y == plot.Location.Y - 1).Single();
                         if (neighbor.PlantType == plot.PlantType)
                         {
-                            plot.Perimeter--;
-                            neighbor.Perimeter--;
+                            plot.Perimeter.Remove('N');
+                            neighbor.Perimeter.Remove('S');
                             if(plot.Region == null)
                             {
                                 neighbor.Region!.Plots.Add(plot);
@@ -69,10 +69,11 @@ namespace Classes.Models
         /// <summary>
         /// Calculates fence price for the garden.
         /// </summary>
+        /// <param name="bulk">Pass true for a bulk discount.</param>
         /// <returns>The price for fencing around the garden.</returns>
-        internal int CalculateFencePrice()
+        internal int CalculateFencePrice(bool bulk)
         {
-            return regions.Sum(r => r.CalculateFencePrice());
+            return regions.Sum(r => r.CalculateFencePrice(bulk));
         }
 
         private static void CombineRegions(GardenPlot plot1, GardenPlot plot2)
